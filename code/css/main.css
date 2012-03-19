@@ -1,0 +1,31 @@
+body {
+    background-color: #272822;
+    color: #EAEAEA;
+    font-family: 'Trebuchet MS';
+}
+
+#products {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#products li {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #3E3F36;
+    width: 400px;
+}
+
+#products li:nth-child(2n) {
+    background-color: #48493F;
+}
+
+#products li.highlight {
+	background-color: #8481BD;
+	font-color: blue;
+}
+
+#products input[type=checkbox] {
+    margin-right: 10px;
+}

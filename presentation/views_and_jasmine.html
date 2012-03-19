@@ -1,0 +1,299 @@
+<!doctype html>  
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Give your views a bit of love with Jasmine.JS</title>
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="libs/reveal.js/css/reset.css">
+        <link rel="stylesheet" href="libs/reveal.js/css/main.css">
+        <link rel="stylesheet" href="libs/reveal.js/lib/zenburn.css">
+        <link type="text/css" rel="stylesheet" href="libs/syntaxhighlighter_3.0.83/styles/shCoreRDark.css"/>
+    </head>
+    
+    <body>
+        
+        <div id="reveal">
+            
+            <div class="slides">
+                <section>
+                    <h1>Give your views a bit of love with Jasmine.JS</h3>
+                    <p><small>Anders Jönsson</small></p>
+                </section>
+                
+                <section>
+                    <h1>Agenda</h1>
+                    <p>
+                        <ol>
+                            <li>Jasmine.JS</li>
+                            <li>Specifying / testing your views</li>
+                            <li>Code demo (yeah! or not)</li>
+                        </ol>
+                    </p>
+                </section>      
+
+                <section>
+                    <h1>Jasmine.JS</h1>
+                    <p>
+                        It's a good tool for creating specifications / tests
+                    </p>
+                </section>
+
+                <section>
+                    <h1>Three parts</h1>
+                    <p>
+                        <ul>                        
+                            <li>syntax (functions)</li>
+                            <li>spy's</li>
+                            <li>runner</li>
+                        </ul>
+                    </p>
+                    <p>
+                        <img src="three.jpg">
+                    </p>
+                </section>
+
+                <section>
+                    <h1>Syntax</h2>
+                    <pre class="brush: js;">
+ 
+  
+var pi = function(){
+   return 3.14;
+}
+
+describe('pi specification', function(){
+   
+   it('should return correct value', function(){       
+
+       var result = pi();
+
+       expect(result).toBe(3.14);
+
+   });
+    
+});
+ 
+                    </pre>
+                </section> 
+
+                <section>
+                    <h2>Matchers</h2>
+                    <h3>expect(...)</h3>
+                    <p>
+                        <ul>
+                            <li>.toBe(...)</li>
+                            <li>.toBeTruthy()</li>
+                            <li>.toBeFalsy()</li>
+                            <li>.toEqual(...)</li>
+                        <ul>
+                    </p>
+                    <p>
+                        <ul>
+                            <li>.toHaveBeenCalled()</li>
+                            <li>.toHaveBeenCalledWith(...)</li>                            
+                        <ul>
+                    </p>
+                </section>  
+
+                <section>
+                    <h3>Setting up a context</h3>
+                    <pre class="brush: js;">
+  
+  
+describe('...', function(){
+
+  beforeEach(function(){
+    
+  });
+
+  it('...', function(){
+
+  })
+
+});
+   
+
+                    </pre>
+                    <p>
+                        afterEach(...) - yeah you have it... <br>but you should never use it
+                    </p>
+                </section>
+
+                <section>   
+                    <h1>Spy's<h1>
+                    <img src="spy.jpg">
+                </section> 
+
+                <section>   
+                    <h2>it's something that looks like the original<h2>
+                    <img src="at-at.jpg"> <img src="at-at-dog.jpg">
+                    <h2>but it isn't</h2>
+                </section> 
+
+                <section>
+                    <h2>How to spy</h2>
+                    <p>Use jasmine.createSpy('name') or spyOn(obj, 'function')</p>
+                    <pre class="brush: js;">
+  
+  
+var mail = {};
+mail.send = jasmine.createSpy('send');
+
+mail.send();
+
+expect(mail.send).toHaveBeenCalled();                    
+                   
+                    </pre> 
+                    <p>
+                        <ul>
+                            <li>method.mostRecentCall.args</li>
+                            <li>method.callCount</li>
+                        <ul>                    
+                    </p>                        
+                </section>                  
+
+                <section>
+                    <h2>Return from a spy</h2>
+                    <pre class="brush: js;">
+ 
+  
+var mail = {};
+mail.send = jasmine
+                .createSpy('send')
+                .andReturn(true);
+
+var result = mail.send();
+
+expect(result).toBeTruthy();
+ 
+
+                    </pre>  
+                    <p>
+                        <ul>
+                            <li>method.return(...)</li>
+                            <li>method.andCallFake(...)</li>
+                            <li>method.andCallThrough()</li>
+                        <ul>                    
+                    </p>                                           
+                </section> 
+
+                <section>
+                    <h1>The runner</h1> 
+                    <iframe src="runner.html" style="height: 300px; width: 500px"></iframe>
+                    <p>The "run" button looks nice, but it doesn't work...</p>
+                </section>
+
+                <section>
+                    <h1>Specifying / testing your views</h1>
+                    <p>
+                        See your libs as external dependencies, remove them from your test. E.g. use spy's instead of Zepto/jQuery/etc. 
+                    </p>
+                </section>
+
+                <section>   
+                    <h2>Encapsulate concepts</h2>
+                    <p>
+                        Encapsulate concepts in the view in the same way as you should have done in the controller / model / route 
+                    </p>
+                    <p>
+                        <img src="encapsulate.png">
+                    </p>
+                </section>
+
+                <section>
+                    <h1>Demo</h1>
+                    <p>Warning, the demo might be a bit overwhelming if you have never seen / done TDD and Jasmine.JS before</p>
+                    <p><small>(but it's on github if you want to check it out later)</small></p>
+                </section>
+
+                <section>
+                    <h1>Products</h1>    
+                    <h3>View: ProductsView</h3>
+                    <h3>Model: ProductModel</h3>
+                    <h3>Collection: ProductsCollection</h3>
+                </section>                
+
+                <section>
+                    <h2>Do's and dont's with Jasmine.JS:</h2>
+                    <ul>
+                        <li>Never use wait(...)</li>
+                        <li>Never touch the DOM</li>
+                        <li>Never do AJAX calls</li>
+                        <li>Use spy's</li>
+                        <li>Keep contexts / setups small</li>
+                        <li>Fix / remove fragile specifications / test</li>
+                        <li>Never use afterEach(...)</li>
+                        <li>Use xit / xdescribe for pending stuff</li>
+                        <li>Run them in a browser, headless is a dangerous thing (unless your doing node.js)</li>
+                        <li>Focus on having 0 failing and 0 pending</li>
+                        <li>Use a CI to exercise the specification / tests</li>
+                        <li>Focus on behaviors</li>
+                        <li>Have fun!</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>Thanks!</h1>
+                    <p>
+                    <ul>
+                        <li><a href="https://twitter.com/#!/anjonsson">#anjonsson</a></li>
+                        <li><a href="https://github.com/archive">https://github.com/archive</a></li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- The navigational controls UI -->
+            <aside class="controls">
+                <a class="left" href="#">&#x25C4;</a>
+                <a class="right" href="#">&#x25BA;</a>
+                <a class="up" href="#">&#x25B2;</a>
+                <a class="down" href="#">&#x25BC;</a>
+            </aside>
+
+            <!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+            <div class="progress"><span></span></div>
+            
+        </div>
+        
+        <script src="libs/reveal.js/js/reveal.js"></script>
+        <script src="libs/reveal.js/lib/highlight.js"></script>
+        <script>
+            // Parse the query string into a key/value object
+            var query = {};
+            location.search.replace( /[A-Z0-9]+?=(\w*)/gi, function(a) {
+                query[ a.split( '=' ).shift() ] = a.split( '=' ).pop();
+            } );
+
+            Reveal.initialize({
+                // Display controls in the bottom right corner
+                controls: true,
+
+                // Display a presentation progress bar
+                progress: true,
+
+                // If true; each slide will be pushed to the browser history
+                history: true,
+
+                // Flags if mouse wheel navigation should be enabled
+                mouseWheel: true,
+
+                // Apply a 3D roll to links on hover
+                rollingLinks: true,
+
+                // UI style
+                theme: query.theme || 'default', // default/neon
+
+                // Transition style
+                transition: query.transition || 'default' // default/cube/page/concave/linear(2d)
+            });
+
+            hljs.initHighlightingOnLoad();
+        </script>
+
+        <script type="text/javascript" src="libs/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+        <script type="text/javascript" src="libs/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
+    </body>
+</html>
